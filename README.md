@@ -1,0 +1,18 @@
+# SAMI — Fresh Start Repository v1.0.0
+
+SAMI (Spatial Analysis & Mapping Intelligence) is an installable site-planning PWA.
+
+## Runtime policy
+- Desktop browsers may run the workspace directly.
+- Phones and tablets must install SAMI to the Home Screen / app launcher before the workspace is exposed.
+- Where `beforeinstallprompt` is supported, the installation button invokes the native browser prompt.
+- iOS/iPadOS Safari does not expose a programmable Add to Home Screen prompt; the installation gate therefore shows the Share → Add to Home Screen instructions and does not provide a browser-workspace bypass.
+
+## Launch experience
+The sales introduction is part of the same PWA. Installed/mobile and desktop launches open the sales film first. **Skip intro** enters the workspace immediately. `meet.html` remains shareable as the standalone presentation route but uses the same manifest and service worker.
+
+## Deployment
+The deployable PWA files live at repository root. GitHub Pages can publish the root directly. A Pages workflow is included under `.github/workflows/pages.yml`.
+
+## Licensing
+Retain the included third-party licence notices.
