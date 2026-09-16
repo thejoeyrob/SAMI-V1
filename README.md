@@ -1,4 +1,4 @@
-# SAMI — Fresh Start Repository v1.0.0
+# SAMI — Fresh Start Repository v1.0.2
 
 SAMI (Spatial Analysis & Mapping Intelligence) is an installable site-planning PWA.
 
@@ -23,3 +23,7 @@ Retain the included third-party licence notices.
 - Complete sidebar collapse.
 - Explore-mode note/photo markers default to field-only; promote them to issued drawings from selection.
 - Close SAMI action plays branded shutdown animation; platform restrictions may prevent programmatic window dismissal.
+
+
+## v1.0.2 update
+- Refined integrated intro sequence with restored central pin impact, slower smoother motion, denser matrix-style word population, overload collapse, and SAMI letter resolve sequence.
