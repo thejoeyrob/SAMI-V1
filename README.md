@@ -16,3 +16,10 @@ The deployable PWA files live at repository root. GitHub Pages can publish the r
 
 ## Licensing
 Retain the included third-party licence notices.
+
+
+## v1.0.1 update
+- Integrated matrix/process-overload sales intro, SAMI pin/CAD-plan formation and Start Planning hand-off.
+- Complete sidebar collapse.
+- Explore-mode note/photo markers default to field-only; promote them to issued drawings from selection.
+- Close SAMI action plays branded shutdown animation; platform restrictions may prevent programmatic window dismissal.

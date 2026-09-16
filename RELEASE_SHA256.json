@@ -6,8 +6,8 @@
   },
   {
     "file": "app.15b1b1bb97.js",
-    "bytes": 207219,
-    "sha256": "15b1b1bb972a6375414d950f6b270dd0b4df65255fea6bb54bb16361b23e20ac"
+    "bytes": 207663,
+    "sha256": "138e65a3aa29013ae485478575fb30ae985403882eda1f29873d784785cac7c2"
   },
   {
     "file": "apple-touch-icon.c4e7a78973.png",
@@ -36,8 +36,8 @@
   },
   {
     "file": "document-engine.0f0db9e9ba.js",
-    "bytes": 55686,
-    "sha256": "0f0db9e9ba8b779e3f590c4f4d9dbd9c1bed3a6531c012aece9289274b0260b1"
+    "bytes": 55764,
+    "sha256": "5dd15b43e08fb127f6c8e5efdf09dd6577b6aaeba07794eca38240a9a028ea57"
   },
   {
     "file": "geometry.aca0a8b9ef.js",
@@ -56,8 +56,8 @@
   },
   {
     "file": "index.html",
-    "bytes": 14815,
-    "sha256": "81f903ff8c627d74354a886a0efdc916c303a1b01ad362c66ec2a1549db795a9"
+    "bytes": 14902,
+    "sha256": "201b6de5d72722ec72b8989531dfffedb1d42342ce9cd99ff3aa2f8711febec1"
   },
   {
     "file": "intelligent-object.39c7da95af.js",
@@ -68,6 +68,11 @@
     "file": "launch-v100.js",
     "bytes": 4327,
     "sha256": "233501f6a2f61be26bc30833ee2dc8db59fc056131f2ec610a5c5f08f8fe9bbb"
+  },
+  {
+    "file": "launch-v101.js",
+    "bytes": 2172,
+    "sha256": "08f8c69884c0ea984f4db29ae06af5c042f3bb148bf06d2b09e00820c125223d"
   },
   {
     "file": "layers-2x.066daca850.png",
@@ -116,8 +121,8 @@
   },
   {
     "file": "meet.html",
-    "bytes": 9686,
-    "sha256": "fee02b72c7896a780282cc68101c21e2af92c948d556eeef4569fcb263d821fd"
+    "bytes": 17960,
+    "sha256": "401719b63fc9a5b143c3c5f87db5efa1da220449663ca8ea65bdb6cf879fe06e"
   },
   {
     "file": "POLYGON-CLIPPING-LICENSE.md",
@@ -136,8 +141,8 @@
   },
   {
     "file": "README.md",
-    "bytes": 1152,
-    "sha256": "c133ee7811cde7ab370104fa6ebd2b1241c8b07daf804e81814afe5b32dca48c"
+    "bytes": 1531,
+    "sha256": "e3c9d7e411a1c68cb999dd861f54e15290820eac863ccc95fb6534fe060b7035"
   },
   {
     "file": "sales-pitch.css",
@@ -191,8 +196,8 @@
   },
   {
     "file": "sw.js",
-    "bytes": 2540,
-    "sha256": "75a7275fb55391402b3581d1fa704cdf9ee0f8483f0f42e1104d22e77e0ef572"
+    "bytes": 2584,
+    "sha256": "1e753180a57e0de1efb453dcaa07eae373fffe4423dfaa7eaa5ac82fc543d541"
   },
   {
     "file": "voice-accessPoint.a2219d93d9.mp3",
@@ -301,8 +306,8 @@
   },
   {
     "file": "workspace-v091.c744c6a226.js",
-    "bytes": 34985,
-    "sha256": "c744c6a226d3f3a84e776c7aafa5d9595661952906790b8ad8323ac448ce7e61"
+    "bytes": 35360,
+    "sha256": "f1ece4adaa368a3f15ffd44cf8edf603b7bebdaacdb81089071b5cce53720926"
   },
   {
     "file": "workspace-v093.9295827c64.js",
@@ -323,5 +328,10 @@
     "file": "workspace-v100.css",
     "bytes": 5925,
     "sha256": "78fc5bc442b0fa28ce3982bcea1f3d7b5cb7f9704261ae19bc8cc174aa617671"
+  },
+  {
+    "file": "workspace-v101.css",
+    "bytes": 4658,
+    "sha256": "ede7018b6ee0059d7205aca2797611f3bb12df0b5f163ed1f35a7eb7440412e1"
   }
 ]
