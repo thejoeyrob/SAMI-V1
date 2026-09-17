@@ -41,6 +41,7 @@ window.SAMIStudio = function(C,O){
   function railButton(drawer,icon,label){return `<button class="rail-tool" data-v093-drawer="${drawer}"><span>${icon}</span><small>${label}</small></button>`;}
   function renderCompactRail(){
     const rail=$('#toolRail');if(!rail)return;const rows=railButtons[currentMode()]||[];
+    rail.dataset.railCount=String(rows.length);
     rail.innerHTML=rows.map(x=>railButton(...x)).join('');
     rail.querySelectorAll('[data-v093-drawer]').forEach(b=>b.onclick=()=>{const k=b.dataset.v093Drawer;openDrawer(k);if(k==='planDraw')activateCurrentDraw(true);});
     rail.querySelectorAll('[data-v093-drawer]').forEach(b=>b.classList.toggle('active',b.dataset.v093Drawer===S.drawer));
@@ -131,7 +132,28 @@ window.SAMIStudio = function(C,O){
     const end=e=>{if(pointer!==e.pointerId)return;el.releasePointerCapture?.(e.pointerId);pointer=null;S.freehandActive=false;S.map.dragging[C.isLocked()?'disable':'enable']();const min=(S.options?.area||/Area|area|hazard|excavation|stoneArea/.test(S.tool))?3:2;if(S.points.length>=min){const out=[];for(const p of S.points)if(!out.length||G.distance(out.at(-1),p)>=.35)out.push(p);if(out.length>=min)S.points=out;ui.draftPoint=S.points.length-1;renderDraft();C.toast('Sketch retained. Adjust points or press Finish.');}else{C.toast('Draw a little further, then press Finish.');renderDraft();}e.preventDefault();e.stopPropagation();};
     el.addEventListener('pointerup',end,{capture:true});el.addEventListener('pointercancel',e=>{if(pointer===e.pointerId){pointer=null;S.freehandActive=false;S.map.dragging[C.isLocked()?'disable':'enable']();renderDraft();}},{capture:true});
   }
-  function genericPattern(f,shown){const pat=f.properties?.stylePattern;if(!['hatch','dots'].includes(pat)||shown.geometry?.type!=='Polygon'||(f.properties?.type==='stoneRoad'&&pat==='hatch'))return;const ring=shown.geometry.coordinates?.[0];if(!ring||ring.length<4)return;const b=G.boundsOf(shown.geometry),c=[(b[0]+b[2])/2,(b[1]+b[3])/2],pr=G.projection(c),rxy=ring.slice(0,-1).map(pr.xy),xs=rxy.map(p=>p[0]),ys=rxy.map(p=>p[1]),minX=Math.min(...xs),maxX=Math.max(...xs),minY=Math.min(...ys),maxY=Math.max(...ys),w=Math.max(.5,maxX-minX),h=Math.max(.5,maxY-minY),target=320,spacing=Math.max(.5,Math.sqrt((w*h)/target)),color=f.properties.styleColor||f.properties.styleFill||'#53796b';let count=0;for(let x=minX;x<=maxX;x+=spacing){for(let y=minY;y<=maxY;y+=spacing){if(!C.pointInRingXY([x,y],rxy))continue;if(pat==='dots'){L.circleMarker(C.latlng(pr.ll([x,y])),{interactive:false,radius:1.25,color,fillColor:color,fillOpacity:.68,weight:0}).addTo(S.group);}else{const len=spacing*.28,a=pr.ll([x-len,y-len]),z=pr.ll([x+len,y+len]);L.polyline([C.latlng(a),C.latlng(z)],{interactive:false,color,weight:.8,opacity:.5}).addTo(S.group);}if(++count>520)return;}}}
+  function genericPattern(f,shown){
+    const pat=f.properties?.stylePattern;
+    if(!['hatch','dots'].includes(pat)||shown.geometry?.type!=='Polygon'||(f.properties?.type==='stoneRoad'&&pat==='hatch'))return;
+    const ring=shown.geometry.coordinates?.[0];
+    if(!ring||ring.length<4)return;
+    const b=G.boundsOf(shown.geometry),c=[(b[0]+b[2])/2,(b[1]+b[3])/2],pr=G.projection(c),rxy=ring.slice(0,-1).map(pr.xy);
+    const xs=rxy.map(p=>p[0]),ys=rxy.map(p=>p[1]),minX=Math.min(...xs),maxX=Math.max(...xs),minY=Math.min(...ys),maxY=Math.max(...ys);
+    const w=Math.max(.5,maxX-minX),h=Math.max(.5,maxY-minY),target=360;
+    let spacing=Math.max(.5,Math.sqrt((w*h)/target));
+    const estimated=Math.ceil(w/spacing)*Math.ceil(h/spacing);
+    if(estimated>900)spacing*=Math.sqrt(estimated/900);
+    const color=f.properties.styleColor||f.properties.styleFill||'#53796b',len=spacing*.28;
+    /* Cover the complete polygon uniformly. The previous row-major hard stop made
+       large fills appear to end halfway across the selected area. */
+    for(let y=minY;y<=maxY;y+=spacing){
+      for(let x=minX;x<=maxX;x+=spacing){
+        if(!C.pointInRingXY([x,y],rxy))continue;
+        if(pat==='dots')L.circleMarker(C.latlng(pr.ll([x,y])),{interactive:false,radius:1.25,color,fillColor:color,fillOpacity:.68,weight:0}).addTo(S.group);
+        else L.polyline([C.latlng(pr.ll([x-len,y-len])),C.latlng(pr.ll([x+len,y+len]))],{interactive:false,color,weight:.8,opacity:.5}).addTo(S.group);
+      }
+    }
+  }
   function render(){base.render();for(const f of S.project.features){let shown;try{shown=C.visibleFeature(f);}catch{continue;}if(shown)genericPattern(f,shown);}syncSelectionBar();queueMicrotask(renderCompactRail);}
   function syncSelectionBar(){const bar=$('#selectionBar'),f=C.selectedFeature();if(!bar||!f)return;const grouped=C.groupMembers(f).length>1,resize=bar.querySelector('[data-action="v093ResizeHint"]'),points=bar.querySelector('[data-action="editVertices"]');if(resize)resize.disabled=f.properties?.dimensionLocked||f.geometry?.type==='Point';if(points)points.disabled=!!f.properties?.derived||!!f.properties?.sourceId||['asset','panel','logo'].includes(f.properties?.type);const gb=bar.querySelector('[data-action="v093GroupToggle"]');if(gb){gb.textContent=grouped?'▢':'▣';gb.title=grouped?'Ungroup':'Group';}}
   function enhanceSelectionBar(){const bar=$('#selectionBar');if(!bar)return;bar.innerHTML='<span><strong id="selectionName"></strong><small id="selectionCount"></small></span><button data-action="open:selection" title="Style / replace">◐</button><button data-action="editMove" title="Move">✥</button><button data-action="v093RotateHint" title="Rotate">↻</button><button data-action="v093ResizeHint" title="Resize">↘</button><button data-action="editVertices" title="Edit points">⌁</button><button data-action="v093GroupToggle" title="Group / ungroup">▣</button><button data-action="editDelete" title="Delete">×</button>';}

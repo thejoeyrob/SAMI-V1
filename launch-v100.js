@@ -30,7 +30,16 @@ addEventListener('appinstalled',()=>{promptEvent=null;window.__SAMI_INSTALL_PROM
 addEventListener('message',e=>{if(e.origin!==location.origin)return;if(e.data?.type==='sami:sales-intro-done')unlockWorkspace();});
 installBtn?.addEventListener('click',promptInstall);
 document.getElementById('salesIntroSkip')?.addEventListener('click',()=>{try{salesFrame?.contentWindow?.postMessage({type:'sami:sales-intro-skip'},location.origin);}catch{}unlockWorkspace();});
-function boot(){if(gateRequired())renderGate();else showSalesIntro();}
+function boot(){
+  if(gateRequired()){renderGate();return;}
+  const returning=new URLSearchParams(location.search).get('from')==='meet';
+  if(returning){
+    unlockWorkspace();
+    try{history.replaceState(null,'',location.pathname+location.hash);}catch{}
+    return;
+  }
+  showSalesIntro();
+}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
 addEventListener('pageshow',()=>{if(gateRequired())renderGate();},{passive:true});
 })();
